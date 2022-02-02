@@ -4,7 +4,7 @@ function renderItems(items, processType,elementID, processFunction) {
     for ( i = 0; i < items.length; i++) {
         let title = items[i]["title"];
         let placeholderID = processType + "-" + title.replaceAll(" ", "-");
-        placeholder += "<div>" + title + "<button " + 'id="' + placeholderID + '">' + processType + '</button>' + "</div>"
+        placeholder += '<div class="itemContainer">' + '<p>'  + title + '</p>'  + '<div class="actionButton" ' + 'id="' + placeholderID + '">' + processType + '</div>' + "</div>"
         itemsMeta.push({"id": placeholderID, "title" : title});
     }
     placeholder +="</div>"
@@ -22,6 +22,8 @@ function apiCall(url, method) {
         if(this.readyState === this.DONE) {
             renderItems(JSON.parse(this.responseText)["pending_items"],"edit","pendingItems",editItem);
             renderItems(JSON.parse(this.responseText)["done_items"],"delete","doneItems",deleteItem);
+            document.getElementById("completeNum").innerHTML = JSON.parse(this.responseText)["done_item_count"];
+            document.getElementById("pendingNum").innerHTML = JSON.parse(this.responseText)["pending_item_count"];
         }
     });
 
